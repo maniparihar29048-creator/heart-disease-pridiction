@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/your-username/heart-disease-prediction.git'
+                git 'https://github.com/maniparihar29048-creator/heart-disease-pridiction.git'
             }
         }
 
