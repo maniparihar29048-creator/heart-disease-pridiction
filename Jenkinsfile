@@ -26,6 +26,10 @@ pipeline {
                 bat 'python predict.py'
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t heart-disease-app .'
             }
         }
     }
