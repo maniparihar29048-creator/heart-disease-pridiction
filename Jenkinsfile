@@ -1,38 +1,30 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.11'
+        }
+    }
 
     stages {
-
-        stage('Clone Repository') {
-            steps {
-                git branch: 'main',
-                url: 'https://github.com/maniparihar29048-creator/heart-disease-pridiction.git'
-            }
-        }
 
         stage('Install Dependencies') {
             steps {
                 sh '''
-                python3 -m pip install --break-system-packages -r requirements.txt
+                pip install --upgrade pip
+                pip install -r requirements.txt
                 '''
             }
         }
 
         stage('Train Model') {
             steps {
-                sh 'python3 train_model.py'
+                sh 'python train.py'
             }
         }
 
         stage('Run Prediction') {
             steps {
-                sh 'python3 predict.py'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t heart-disease-app .'
+                sh 'python predict.py'
             }
         }
     }
