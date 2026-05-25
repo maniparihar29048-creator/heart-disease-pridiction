@@ -5,31 +5,32 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/your-username/heart-disease-prediction.git'
+                git branch: 'main',
+                url: 'https://github.com/maniparihar29048-creator/heart-disease-pridiction.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                bat 'pip install -r requirements.txt'
+                sh 'python3 -m pip install --break-system-packages -r requirements.txt'
             }
         }
 
         stage('Train Model') {
             steps {
-                bat 'python train_model.py'
+                sh 'python3 train_model.py'
             }
         }
 
         stage('Run Prediction') {
             steps {
-                bat 'python predict.py'
+                sh 'python3 predict.py'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t heart-disease-app .'
+                sh 'docker build -t heart-disease-app .'
             }
         }
     }
