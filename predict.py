@@ -1,21 +1,29 @@
-import pandas as pd
 import joblib
+import numpy as np
 
-model = joblib.load("heart_disease_model.pkl")
+# Load Model and Scaler
+model = joblib.load("model.pkl")
 scaler = joblib.load("scaler.pkl")
 
-sample_data = pd.DataFrame([[
-    52,1,0,125,212,0,1,168,0,1.0,2,2,3
-]], columns=[
-    'age','sex','cp','trestbps','chol','fbs',
-    'restecg','thalach','exang','oldpeak',
-    'slope','ca','thal'
+# Example Input Data
+# Format:
+# [age, sex, cp, trestbps, chol,
+#  fbs, restecg, thalach, exang,
+#  oldpeak, slope, ca, thal]
+
+sample_data = np.array([
+    [52, 1, 0, 125, 212,
+     0, 1, 168, 0,
+     1.0, 2, 2, 3]
 ])
 
+# Scale Data
 scaled_data = scaler.transform(sample_data)
 
+# Predict
 prediction = model.predict(scaled_data)
 
+# Output Result
 if prediction[0] == 1:
     print("Heart Disease Detected")
 else:
