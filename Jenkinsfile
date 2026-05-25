@@ -1,30 +1,31 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.11'
-        }
-    }
+    agent any
 
     stages {
 
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/your-username/heart-disease-prediction.git'
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
-                sh '''
-                pip install --upgrade pip
-                pip install -r requirements.txt
-                '''
+                bat 'pip install -r requirements.txt'
             }
         }
 
         stage('Train Model') {
             steps {
-                sh 'python train.py'
+                bat 'python train_model.py'
             }
         }
 
         stage('Run Prediction') {
             steps {
-                sh 'python predict.py'
+                bat 'python predict.py'
+            }
+        }
             }
         }
     }
